@@ -17,11 +17,25 @@ n7 = 200/v7+1
 n8 = 200/v8+1
 
 def init(waysForN,n):
-	x = 0
-	while x<201:
-		print x
-		waysForN[x]=1
-		x+=n
+	for x in xrange(n,201,n):
+		waysForN[x] = 1
+
+def combinedWays(ways1, ways2):
+	combinedWays = [0 for x in xrange(0,201)]
+	for x in xrange(1,201):
+		ways = 0
+		for y in xrange(0,x+1):
+			z = x - y
+			ways += ways1[y] * ways2[z]
+		ways += ways1[x] + ways2[x]
+		combinedWays[x] = ways
+	return combinedWays
+
+def combinedWaylist(wayList):
+	combinedWaysA = wayList[0]
+	for x in xrange(1,len(wayList)):
+		combinedWaysA = combinedWays(combinedWaysA, wayList[x])
+	return combinedWaysA
 
 if __name__ == '__main__':
 
@@ -44,23 +58,6 @@ if __name__ == '__main__':
 	init(waysFor7,100)
 	init(waysFor8,200)
 
+	result = combinedWaylist([waysFor1,waysFor2,waysFor3,waysFor4,waysFor5,waysFor6,waysFor7,waysFor8])
 
-
-
-	# for x8 in xrange(0,n8):
-	# 	for x7 in xrange(0,n7):
-	# 		for x6 in xrange(0,n6):
-	# 			for x5 in xrange(0,n5):
-	# 				for x4 in xrange(0,n4):
-	# 					for x3 in xrange(0,n3):
-	# 						for x2 in xrange(0,n2):
-	# 							for x1 in xrange(0,n1):
-	# 								pi = x1*v1+x2*v2+x3*v3+x4*v4+x5*v5+x6*v6+x7*v7+x8*v8
-
-	# 								if pi == 200:
-	# 									print pi
-	# 									way =[x1,x2,x3,x4,x5,x6,x7,x8]
-	# 									print way
-	# 									ways.append(way)
-
-	print waysFor1,waysFor2
+	print result[200]
